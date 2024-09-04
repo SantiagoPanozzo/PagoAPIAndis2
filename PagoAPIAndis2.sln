@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagoAPIAndis2", "PagoAPIAndis2\PagoAPIAndis2.csproj", "{FDBB02BD-3E9A-4276-937D-7936EE110CE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDBB02BD-3E9A-4276-937D-7936EE110CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDBB02BD-3E9A-4276-937D-7936EE110CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDBB02BD-3E9A-4276-937D-7936EE110CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDBB02BD-3E9A-4276-937D-7936EE110CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
