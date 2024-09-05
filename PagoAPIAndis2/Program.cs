@@ -1,3 +1,5 @@
+using System.Net;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,29 +18,58 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+var pagos = new[]
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    new Pago(123123, 123456, 10),
+    new Pago(123123, 123456, 20),
+    new Pago(123123, 123456, 30),
+    new Pago(987987, 98765, 40),
+    new Pago(987987, 123456, 50),
 };
 
-app.MapGet("/weatherforecast", () =>
+
+app.MapGet("/api/pagos", () =>
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
+        var pagosList = pagos.ToList(); 
+        return pagosList;
     })
-    .WithName("GetWeatherForecast")
+    .WithName("GetPagos")
     .WithOpenApi();
 
-app.Run();
+app.MapGet("/api/pagos/{id}", (int id) =>
+    {
+        var pago = pagos.FirstOrDefault(p => p.Id == id);
+        if (pago == null)
+        {
+            return Results.NotFound();
+        }
+        return Results.Ok(pago);
+    })
+    .WithName("GetPagoById")
+    .WithOpenApi();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+app.MapPost("/api/pagos", (Pago pago) =>
+    {
+        pagos = pagos.Append(pago).ToArray();
+        return Results.Created($"/api/pagos/{pago.Id}", pago);
+    })
+    .WithName("CreatePago")
+    .WithOpenApi();
+
+app.MapGet("/api/tutorial", () =>
+    {
+        const string link = "https://youtube.com/watch?v=dQw4w9WgXcQ";
+        return Results.Ok(link);
+    })
+    .WithName("GetTutorial")
+    .WithOpenApi();
+
+app.MapGet("/api/estado", () =>
+    {
+        return Results.Text("Mira el codigo de estado", statusCode: 418);
+    })
+    .WithName("GetEstado")
+    .WithOpenApi();
+
+
+app.Run();
